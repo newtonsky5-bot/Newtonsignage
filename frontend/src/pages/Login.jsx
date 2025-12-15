@@ -7,21 +7,24 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
+const submitHandler = async (e) => {
+  e.preventDefault();
 
-    try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        { email, password }
-      );
+  const { data } = await axios.post(
+    "http://localhost:5000/api/auth/login",
+    { email, password }
+  );
 
-      localStorage.setItem("token", data.token);
-      navigate("/home");
-    } catch (error) {
-      alert(error.response?.data?.message || "Login failed");
-    }
-  };
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("role", data.role);
+
+  if (data.role === "admin") {
+    navigate("/admin");
+  } else {
+    navigate("/home");
+  }
+};
+
 
   return (
     <form onSubmit={submitHandler} style={{ maxWidth: 400, margin: "auto" }}>
