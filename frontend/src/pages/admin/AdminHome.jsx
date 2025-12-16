@@ -1,10 +1,14 @@
-import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function AdminHome() {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+  return (
+    <div>
+      <h1>Admin Dashboard</h1>
 
-  if (!token || role !== "admin") return <Navigate to="/" />;
-
-  return <h1>Admin Dashboard 🔐</h1>;
+      <nav>
+        <Link to="/admin/create-user">Create User</Link> |{" "}
+        <Link to="/admin/users">All Users</Link>
+      </nav>
+    </div>
+  );
 }
